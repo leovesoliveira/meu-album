@@ -53,4 +53,12 @@ class AlbumController extends Controller
             'cards' => $album->cards->toQuery()->orderBy('id', 'asc')->get(),
         ]);
     }
+
+    public function missingCards(Album $album)
+    {
+        return Inertia::render('MissingCardsAlbum', [
+            'album' => $album->toArray(),
+            'cards' => $album->cards->toQuery()->where('quantity', '=', '0')->orderBy('id', 'asc')->get(),
+        ]);
+    }
 }

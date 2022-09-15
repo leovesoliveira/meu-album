@@ -2,11 +2,15 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import { reactive } from "vue";
+import { useForm } from "@inertiajs/inertia-vue3";
 
 defineProps({
     album: Object,
     cards: Object,
 });
+
+const addForm = useForm();
+const subtractForm = useForm();
 
 const hasCard = (quantity) => quantity !== 0;
 
@@ -30,6 +34,12 @@ const resetSelected = () => {
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Album: {{ album.description }}
+
+                <Link
+                    :href="`/album/${album.id}/missing-cards`"
+                    class="block text-base underline text-indigo-600"
+                    >Ver só as figurinhas que faltam</Link
+                >
             </h2>
         </template>
 
@@ -102,25 +112,101 @@ const resetSelected = () => {
                                 v-if="isSelected(card.id)"
                                 class="w-full fixed bottom-0 right-0 left-0 z-30 flex"
                             >
-                                <Link
-                                    as="button"
-                                    :href="`/card/${card.id}/add-quantity`"
-                                    method="patch"
-                                    preserve-scroll
-                                    class="flex-1 bg-emerald-400 flex items-center justify-center p-4 text-white uppercase font-bold text-sm"
+                                <button
+                                    @click.prevent="
+                                        addForm.patch(
+                                            `/card/${card.id}/add-quantity`,
+                                            { preserveScroll: true }
+                                        )
+                                    "
+                                    :disabled="addForm.processing"
+                                    class="relative flex-1 bg-emerald-400 disabled:bg-emerald-100 flex items-center justify-center p-4 text-white uppercase font-bold text-sm"
                                 >
-                                    adicionar
-                                </Link>
+                                    <span v-if="!addForm.processing">
+                                        adicionar
+                                    </span>
 
-                                <Link
-                                    as="button"
-                                    :href="`/card/${card.id}/subtract-quantity`"
-                                    method="patch"
-                                    preserve-scroll
-                                    class="flex-1 bg-red-400 flex items-center justify-center p-4 text-white uppercase font-bold text-sm"
+                                    <div
+                                        v-else
+                                        class="absolute inset-0 w-full h-full text-emerald-400"
+                                    >
+                                        <svg
+                                            class="w-full h-full"
+                                            version="1.1"
+                                            id="L9"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px"
+                                            y="0px"
+                                            viewBox="0 0 100 100"
+                                            enable-background="new 0 0 0 0"
+                                            xml:space="preserve"
+                                        >
+                                            <path
+                                                fill="currentColor"
+                                                d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50"
+                                            >
+                                                <animateTransform
+                                                    attributeName="transform"
+                                                    attributeType="XML"
+                                                    type="rotate"
+                                                    dur="1s"
+                                                    from="0 50 50"
+                                                    to="360 50 50"
+                                                    repeatCount="indefinite"
+                                                />
+                                            </path>
+                                        </svg>
+                                    </div>
+                                </button>
+
+                                <button
+                                    @click.prevent="
+                                        subtractForm.patch(
+                                            `/card/${card.id}/subtract-quantity`,
+                                            { preserveScroll: true }
+                                        )
+                                    "
+                                    :disabled="subtractForm.processing"
+                                    class="relative flex-1 bg-red-400 disabled:bg-red-100 flex items-center justify-center p-4 text-white uppercase font-bold text-sm"
                                 >
-                                    remover
-                                </Link>
+                                    <span v-if="!subtractForm.processing">
+                                        remover
+                                    </span>
+
+                                    <div
+                                        v-else
+                                        class="absolute inset-0 w-full h-full text-red-400"
+                                    >
+                                        <svg
+                                            class="w-full h-full"
+                                            version="1.1"
+                                            id="L9"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px"
+                                            y="0px"
+                                            viewBox="0 0 100 100"
+                                            enable-background="new 0 0 0 0"
+                                            xml:space="preserve"
+                                        >
+                                            <path
+                                                fill="currentColor"
+                                                d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50"
+                                            >
+                                                <animateTransform
+                                                    attributeName="transform"
+                                                    attributeType="XML"
+                                                    type="rotate"
+                                                    dur="1s"
+                                                    from="0 50 50"
+                                                    to="360 50 50"
+                                                    repeatCount="indefinite"
+                                                />
+                                            </path>
+                                        </svg>
+                                    </div>
+                                </button>
                             </div>
                         </div>
                     </div>

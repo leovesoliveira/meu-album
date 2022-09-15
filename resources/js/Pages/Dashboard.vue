@@ -48,7 +48,7 @@ defineProps({
                 </div>
 
                 <Link
-                    class="block px-4 py-6 underline text-slate-400"
+                    class="block px-4 py-6 underline text-slate-400 sm:px-0"
                     href="/album/create"
                     >Adicionar Álbum</Link
                 >

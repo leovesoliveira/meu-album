@@ -21,10 +21,10 @@ Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
     ]);
 });
+
+Route::get('/album/{album}/missing-cards', [AlbumController::class, 'missingCards'])->name('album.missing-cards');
 
 Route::middleware([
     'auth:sanctum',
