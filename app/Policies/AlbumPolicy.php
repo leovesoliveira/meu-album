@@ -53,7 +53,7 @@ class AlbumPolicy
      */
     public function update(User $user, Album $album)
     {
-        //
+        return $album->users->contains($user);
     }
 
     /**

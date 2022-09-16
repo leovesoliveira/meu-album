@@ -24,21 +24,54 @@ defineProps({
                 </div>
 
                 <div v-if="albums.length" class="flex flex-col gap-4">
-                    <Link
+                    <div
                         :href="`/album/${album.id}`"
                         v-for="album in albums"
-                        class="bg-white px-4 py-6 flex justify-between items-center shadow sm:rounded"
+                        class="relative bg-white flex justify-between items-center shadow sm:rounded overflow-hidden"
                     >
-                        <p class="text-xl text-slate-700">
-                            {{ album.description }}
-                        </p>
-
-                        <p
-                            class="px-3 py-1 font-code bg-slate-100 border-2 border-dotted border-slate-300 text-slate-700 tracking-widest rounded"
+                        <Link
+                            :href="`/album/${album.id}`"
+                            class="pl-4 pr-20 py-6 w-full flex flex-col items-start"
                         >
-                            {{ album.code }}
-                        </p>
-                    </Link>
+                            <p class="text-xl text-slate-700 mb-1">
+                                {{ album.description }}
+                            </p>
+
+                            <p
+                                class="px-3 py-1 font-code bg-slate-100 border-2 border-dotted border-slate-300 text-slate-700 tracking-widest rounded"
+                            >
+                                {{ album.code }}
+                            </p>
+                        </Link>
+
+                        <Link
+                            :href="`/album/${album.id}/edit`"
+                            class="flex items-center absolute top-0 right-0 bottom-0 px-2 border-l border-slate-100 bg-slate-50 text-slate-300"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="icon icon-tabler icon-tabler-settings"
+                                width="44"
+                                height="44"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path
+                                    stroke="none"
+                                    d="M0 0h24v24H0z"
+                                    fill="none"
+                                />
+                                <path
+                                    d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"
+                                />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                        </Link>
+                    </div>
                 </div>
 
                 <div v-else>

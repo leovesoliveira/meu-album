@@ -6,7 +6,6 @@ import FormSection from "@/Components/FormSection.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 
 const form = useForm({
@@ -16,7 +15,6 @@ const form = useForm({
 
 const storeAlbum = () => {
     form.post(route("album.store"), {
-        errorBag: "updateProfileInformation",
         preserveScroll: true,
     });
 };

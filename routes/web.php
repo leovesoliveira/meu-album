@@ -37,6 +37,9 @@ Route::middleware([
     Route::post('/album', [AlbumController::class, 'store'])->name('album.store');
     Route::get('/album/create', [AlbumController::class, 'create'])->name('album.create');
     Route::get('/album/{album}', [AlbumController::class, 'show'])->name('album.show');
+    Route::get('/album/{album}/edit', [AlbumController::class, 'edit'])->name('album.edit');
+    Route::patch('/album/{album}/add-user', [AlbumController::class, 'addUser'])->name('album.add-user');
+    Route::patch('/album/{album}/remove-user/{user}', [AlbumController::class, 'removeUser'])->name('album.remove-user');
 
     //Cards
     Route::patch('/card/{card}/add-quantity', [CardController::class, 'add'])->name('card.add-quantity');

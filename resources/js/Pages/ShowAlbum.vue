@@ -77,7 +77,7 @@ const resetSelected = () => {
                                         card.id
                                     ),
                                 }"
-                                class="relative font-initials border-8 flex items-center justify-center px-4 py-8"
+                                class="relative cursor-pointer font-initials border-8 flex items-center justify-center px-4 py-8"
                             >
                                 <span
                                     class="w-16 font-black text-2xl -tracking-wide leading-none text-gray-400 text-center"

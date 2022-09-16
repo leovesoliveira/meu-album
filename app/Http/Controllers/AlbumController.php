@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\AllCardsToAlbum;
 use App\Models\Album;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -52,6 +53,50 @@ class AlbumController extends Controller
             'album' => $album->toArray(),
             'cards' => $album->cards->toQuery()->orderBy('id', 'asc')->get(),
         ]);
+    }
+
+    public function edit(Album $album)
+    {
+        if (Auth::user()->cannot('view', $album)) {
+            abort(403);
+        }
+
+        return Inertia::render('EditAlbum', [
+            'album' => $album->toArray(),
+            'users' => $album->users->toArray(),
+        ]);
+    }
+
+    public function addUser(Album $album, Request $request)
+    {
+        if (Auth::user()->cannot('update', $album)) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        $user = User::where('email', '=', $validated['email'])->first();
+
+        if (!$album->users->contains($user)) {
+           $album->users()->attach($user);
+        }
+    }
+
+    public function removeUser(Album $album, User $user)
+    {
+        if (Auth::user()->cannot('update', $album)) {
+            abort(403);
+        }
+
+        if ($album->users->count() > 1) {
+            $album->users()->detach($user);
+        }
+
+        if (Auth::user()->id === $user->id) {
+            return Redirect::route('dashboard');
+        }
     }
 
     public function missingCards(Album $album)
