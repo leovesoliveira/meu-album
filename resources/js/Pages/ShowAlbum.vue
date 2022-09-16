@@ -74,23 +74,32 @@ const resetSelected = () => {
 </script>
 
 <template>
-    <AppLayout title="Dashboard">
+    <AppLayout :title="`Album: ${album.description}`">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Album: {{ album.description }}
 
                 <Link
                     :href="`/album/${album.id}/missing-cards`"
-                    class="block text-base underline text-indigo-600"
+                    class="block text-base underline text-indigo-600 mt-2"
                     >Ver só as figurinhas que faltam</Link
                 >
+
+                <Link
+                    :href="`/album/${album.id}/edit-cards`"
+                    class="block text-base underline text-indigo-600 mt-2"
+                    >Adicionar/Remover figurinhas
+                </Link>
             </h2>
         </template>
 
-        <div class="py-12">
+        <div class="pb-12 pt-4">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-col gap-4 px-4 sm:px-0">
-                    <div v-for="(cardsBySubType, subtype) in cards">
+                    <div
+                        v-for="(cardsBySubType, subtype) in cards"
+                        :id="subtype"
+                    >
                         <h3 class="pb-4 pt-6">
                             <hr
                                 class="-mb-4 border-t-2 border-indigo-400 border-dotted"

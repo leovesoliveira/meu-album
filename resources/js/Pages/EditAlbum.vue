@@ -49,7 +49,7 @@ const closeModal = () => {
 </script>
 
 <template>
-    <AppLayout title="Adiciona Álbum">
+    <AppLayout title="`Editar Álbum: ${album.description}`">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Editar Álbum: {{ album.description }}

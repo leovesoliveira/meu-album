@@ -1,4 +1,6 @@
 <script setup>
+import { Head } from "@inertiajs/inertia-vue3";
+
 defineProps({
     album: Object,
     cards: Object,
@@ -50,6 +52,8 @@ const SubTypeNames = {
 </script>
 
 <template>
+    <Head :title="`Album: ${album.description}`" />
+
     <div class="flex flex-col bg-gray-100 border-t-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
             <h2
@@ -78,7 +82,7 @@ const SubTypeNames = {
                         </h3>
 
                         <div
-                            class="grid grid-cols-3 gap-4 px-4 sm:px-0 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7"
+                            class="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7"
                         >
                             <div v-for="card in cardsBySubType">
                                 <div class="flex items-center justify-center">

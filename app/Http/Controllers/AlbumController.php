@@ -99,6 +99,103 @@ class AlbumController extends Controller
         }
     }
 
+    public function editCards(Album $album)
+    {
+        return Inertia::render('EditCardsAlbum', ['album' => $album->toArray()]);
+    }
+
+    public function editCardsConfirmation(Album $album, Request $request)
+    {
+        if (Auth::user()->cannot('view', $album)) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'cards' => 'required|string',
+        ]);
+        $stringfiedCards = strtoupper($validated['cards']);
+
+        $cards = [];
+
+        $explode = explode('|', $stringfiedCards);
+
+        foreach ($explode as $item) {
+            if ($item === '00') {
+                array_push($cards, $item);
+                continue;
+            }
+
+            $cardName = explode(':', $item);
+
+            if(isset($cardName[1])) {
+                $cardNumbers = explode(',', $cardName[1]);
+
+                foreach ($cardNumbers as $number) {
+                    if ($cardName[0] === 'C') {
+                        array_push($cards, "{$cardName[0]}{$number}");
+                        continue;
+                    }
+
+                    array_push($cards, "{$cardName[0]} {$number}");
+                }
+            }
+        }
+
+        $cards = $album->cards()->whereIn('code', $cards)->orderBy('id', 'asc')->get()->groupBy('sub_type');
+
+        return Inertia::render('EditCardsConfirmationAlbum', ['album' => $album, 'cards' => $cards]);
+    }
+
+    public function addCardsQuantity(Album $album, Request $request)
+    {
+        if (Auth::user()->cannot('update', $album)) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'cards' => 'required|array',
+            'cards.*' => 'required|exists:cards,id',
+        ]);
+
+        $cards = $album->cards()->whereIn('id', $validated['cards'])->get();
+
+        DB::transaction(function () use($cards) {
+            $cards->each(function ($card) {
+                $card->quantity = $card->quantity + 1;
+                $card->save();
+            });
+        });
+
+        return Redirect::route('album.show', $album);
+    }
+
+    public function subtractCardsQuantity(Album $album, Request $request)
+    {
+        if (Auth::user()->cannot('update', $album)) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'cards' => 'required|array',
+            'cards.*' => 'required|exists:cards,id',
+        ]);
+
+        $cards = $album->cards()->whereIn('id', $validated['cards'])->get();
+
+        DB::transaction(function () use($cards) {
+            $cards->each(function ($card) {
+                if($card->quantity <= 0) {
+                    return;
+                }
+
+                $card->quantity = $card->quantity - 1;
+                $card->save();
+            });
+        });
+
+        return Redirect::route('album.show', $album);
+    }
+
     public function missingCards(Album $album)
     {
         return Inertia::render('MissingCardsAlbum', [
