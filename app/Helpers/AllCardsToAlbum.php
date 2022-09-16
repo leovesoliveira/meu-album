@@ -45,7 +45,8 @@ class AllCardsToAlbum
     {
         array_push(static::$cards, static::createCard(
             code: '00',
-            type: CardTypes::Zero
+            type: CardTypes::Zero,
+            subType: FwcVariants::Zero
         ));
     }
 
@@ -119,6 +120,7 @@ class AllCardsToAlbum
             array_push(static::$cards, static::createCard(
                 code: "C{$number}",
                 type: CardTypes::Coke,
+                subType: FwcVariants::Coke
             ));
         }
     }

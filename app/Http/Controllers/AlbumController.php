@@ -51,7 +51,7 @@ class AlbumController extends Controller
 
         return Inertia::render('ShowAlbum', [
             'album' => $album->toArray(),
-            'cards' => $album->cards->toQuery()->orderBy('id', 'asc')->get(),
+            'cards' => $album->cards->toQuery()->orderBy('id', 'asc')->get()->groupBy('sub_type'),
         ]);
     }
 
@@ -103,7 +103,7 @@ class AlbumController extends Controller
     {
         return Inertia::render('MissingCardsAlbum', [
             'album' => $album->toArray(),
-            'cards' => $album->cards->toQuery()->where('quantity', '=', '0')->orderBy('id', 'asc')->get(),
+            'cards' => $album->cards->toQuery()->where('quantity', '=', '0')->orderBy('id', 'asc')->get()->groupBy('sub_type'),
         ]);
     }
 }
