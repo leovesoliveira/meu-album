@@ -33,15 +33,37 @@ defineProps({
                             :href="`/album/${album.id}`"
                             class="pl-4 pr-20 py-6 w-full flex flex-col items-start"
                         >
-                            <p class="text-xl text-slate-700 mb-1">
-                                {{ album.description }}
-                            </p>
+                            <div class="w-full flex items-start justify-between">
+                                <div>
+                                    <p class="text-xl text-slate-700 mb-1">
+                                        {{ album.description }}
+                                    </p>
 
-                            <p
-                                class="px-3 py-1 font-code bg-slate-100 border-2 border-dotted border-slate-300 text-slate-700 tracking-widest rounded"
-                            >
-                                {{ album.code }}
-                            </p>
+                                    <p class="text-md text-slate-700 mb-1">
+                                        Total: {{ album.total_quantity_cards }} figurinhas
+                                    </p>
+
+                                    <p class="text-md text-slate-700 mb-1">
+                                        Repetidas: {{ album.total_quantity_repeated_cards }} figurinhas
+                                    </p>
+                                </div>
+
+                                <p
+                                    class="px-3 py-1 font-code bg-slate-100 border-2 border-dotted border-slate-300 text-slate-700 tracking-widest rounded"
+                                >
+                                    {{ album.code }}
+                                </p>
+                            </div>
+
+                            <div class="w-full flex justify-between">
+                                <p class="text-xl text-slate-700">
+                                    {{ album.percent_complete }}%
+                                </p>
+
+                                <p class="text-xl text-slate-700">
+                                    {{ album.total_at_least_one_cards }} / {{ album.total_cards }}
+                                </p>
+                            </div>
                         </Link>
 
                         <Link
