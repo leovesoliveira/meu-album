@@ -203,4 +203,12 @@ class AlbumController extends Controller
             'cards' => $album->cards->toQuery()->where('quantity', '=', '0')->orderBy('id', 'asc')->get()->groupBy('sub_type'),
         ]);
     }
+
+    public function repeteadCards(Album $album)
+    {
+        return Inertia::render('RepeteadCardsAlbum', [
+            'album' => $album->toArray(),
+            'cards' => $album->cards->toQuery()->where('quantity', '>', '1')->orderBy('id', 'asc')->get()->groupBy('sub_type'),
+        ]);
+    }
 }

@@ -117,15 +117,22 @@ const resetSelected = () => {
 
             <div class="flex flex-wrap gap-2 mt-3">
                 <Link
+                    :href="`/album/${album.id}/repetead-cards`"
+                    class="block text-sm uppercase font-bold px-3 py-1 text-white bg-yellow-600 rounded hover:bg-yellow-500"
+                >
+                    Figurinhas repetidas
+                </Link>
+
+                <Link
                     :href="`/album/${album.id}/missing-cards`"
-                    class="block text-sm uppercase font-bold px-3 py-1 text-white bg-indigo-500 rounded hover:bg-indigo-700"
+                    class="block text-sm uppercase font-bold px-3 py-1 text-white bg-red-600 rounded hover:bg-red-500"
                 >
                     Figurinhas que faltam
                 </Link>
 
                 <Link
                     :href="`/album/${album.id}/edit-cards`"
-                    class="block text-sm uppercase font-bold px-3 py-1 text-white bg-indigo-500 rounded hover:bg-indigo-700"
+                    class="block text-sm uppercase font-bold px-3 py-1 text-white bg-green-600 rounded hover:bg-green-500"
                 >
                     Adicionar/remover figurinhas
                 </Link>

@@ -25,6 +25,7 @@ Route::get('/', function () {
 });
 
 Route::get('/album/{album}/missing-cards', [AlbumController::class, 'missingCards'])->name('album.missing-cards');
+Route::get('/album/{album}/repetead-cards', [AlbumController::class, 'repeteadCards'])->name('album.repetead-cards');
 
 Route::middleware([
     'auth:sanctum',
