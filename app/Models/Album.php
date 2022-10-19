@@ -20,7 +20,8 @@ class Album extends Model
         'total_quantity_cards',
         'total_at_least_one_cards',
         'total_quantity_repeated_cards',
-        'percent_complete'
+        'percent_complete',
+        'total_missing_cards'
     ];
 
     protected function totalCards(): Attribute
@@ -49,18 +50,34 @@ class Album extends Model
     protected function totalQuantityRepeatedCards(): Attribute
     {
         $repeatedCards = $this->cards->filter(fn ($card) => $card->quantity >= 2);
+        $quantityRepeatedCards = $repeatedCards->sum('quantity') - $repeatedCards->count();
 
         return new Attribute(
-            get: fn () => $repeatedCards->sum('quantity'),
+            get: fn () => $quantityRepeatedCards,
         );
     }
 
     protected function percentComplete(): Attribute
     {
         $atLeastOneCards = $this->cards->filter(fn ($card) => $card->quantity >= 1);
+        $percentComplete = 0;
+
+        if ($this->cards->count() > 0) {
+            $percentComplete = $atLeastOneCards->count() / $this->cards->count() * 100;
+        }
 
         return new Attribute(
-            get: fn () => (int) ($atLeastOneCards->count() / $this->cards->count() * 100),
+            get: fn () => (int) $percentComplete,
+        );
+    }
+
+    protected function totalMissingCards(): Attribute
+    {
+        $atLeastOneCards = $this->cards->filter(fn ($card) => $card->quantity >= 1);
+        $missingCards = $this->cards->count() - $atLeastOneCards->count();
+
+        return new Attribute(
+            get: fn () => (int) $missingCards,
         );
     }
 

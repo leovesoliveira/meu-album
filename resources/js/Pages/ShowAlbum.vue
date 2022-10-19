@@ -76,21 +76,60 @@ const resetSelected = () => {
 <template>
     <AppLayout :title="`Album: ${album.description}`">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Album: {{ album.description }}
+            <div class="flex flex-wrap items-center mb-4 justify-between">
+                <h2 class="font-semibold text-xl mb-1 text-gray-800 leading-tight mr-4">
+                    Album: {{ album.description }}
+                </h2>
 
+                <p class="px-3 py-1 font-code bg-slate-100 border-2 border-dotted border-slate-300 text-slate-700 tracking-widest rounded">
+                    {{ album.code }}
+                </p>
+            </div>
+
+            <p class="w-full text-md text-blue-600 mb-1 border-b border-slate-200 flex justify-between">
+                <span>Total: </span>
+                <span><strong class="font-bold">{{ album.total_quantity_cards }}</strong> figurinhas</span>
+            </p>
+
+            <p class="w-full text-md text-yellow-600 mb-1 border-b border-slate-200 flex justify-between">
+                <span>Repetidas: </span>
+                <span><strong class="font-bold">{{ album.total_quantity_repeated_cards }}</strong> figurinhas</span>
+            </p>
+
+            <p class="w-full text-md text-red-600 mb-2 flex justify-between">
+                <span>Faltam: </span>
+                <span><strong class="font-bold">{{ album.total_missing_cards }}</strong> figurinhas</span>
+            </p>
+
+            <div class="w-full relative flex justify-between bg-slate-400 px-2 py-1 rounded overflow-hidden">
+                <p class="font-bold text-white z-10">
+                    {{ album.percent_complete }}%
+                </p>
+
+                <p class="font-bold text-white z-10">
+                    {{ album.total_at_least_one_cards }} / {{ album.total_cards }}
+                </p>
+
+                <div class="absolute inset-0 flex">
+                    <div class="bg-indigo-800" :style="`width:${album.percent_complete}%`"></div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mt-3">
                 <Link
                     :href="`/album/${album.id}/missing-cards`"
-                    class="block text-base underline text-indigo-600 mt-2"
-                    >Ver só as figurinhas que faltam</Link
+                    class="block text-sm uppercase font-bold px-3 py-1 text-white bg-indigo-500 rounded hover:bg-indigo-700"
                 >
+                    Figurinhas que faltam
+                </Link>
 
                 <Link
                     :href="`/album/${album.id}/edit-cards`"
-                    class="block text-base underline text-indigo-600 mt-2"
-                    >Adicionar/Remover figurinhas
+                    class="block text-sm uppercase font-bold px-3 py-1 text-white bg-indigo-500 rounded hover:bg-indigo-700"
+                >
+                    Adicionar/remover figurinhas
                 </Link>
-            </h2>
+            </div>
         </template>
 
         <div class="pb-12 pt-4">
