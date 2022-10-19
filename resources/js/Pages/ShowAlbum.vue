@@ -117,7 +117,7 @@ const resetSelected = () => {
 
             <div class="flex flex-wrap gap-2 mt-3">
                 <Link
-                    :href="`/album/${album.id}/repetead-cards`"
+                    :href="`/album/${album.id}/repeated-cards`"
                     class="block text-sm uppercase font-bold px-3 py-1 text-white bg-yellow-600 rounded hover:bg-yellow-500"
                 >
                     Figurinhas repetidas

@@ -204,9 +204,9 @@ class AlbumController extends Controller
         ]);
     }
 
-    public function repeteadCards(Album $album)
+    public function repeatedCards(Album $album)
     {
-        return Inertia::render('RepeteadCardsAlbum', [
+        return Inertia::render('RepeatedCardsAlbum', [
             'album' => $album->toArray(),
             'cards' => $album->cards->toQuery()->where('quantity', '>', '1')->orderBy('id', 'asc')->get()->groupBy('sub_type'),
         ]);
