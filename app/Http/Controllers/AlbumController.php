@@ -117,7 +117,7 @@ class AlbumController extends Controller
 
         $cards = [];
 
-        $explode = explode('|', $stringfiedCards);
+        $explode = explode('/', $stringfiedCards);
 
         foreach ($explode as $item) {
             if ($item === '00') {

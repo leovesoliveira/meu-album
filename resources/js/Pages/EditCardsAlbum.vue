@@ -42,7 +42,7 @@ const fetchCards = (albumId) => {
                         -1 na quantidade de cada figurinha que você colocar.
                         <br /><br />Precisa ser escrito no seguinte formato,
                         segue o exemplo:<br /><br />
-                        <strong>00|FWC:1,3,10|BRA:3,8,17|C:4,8</strong>
+                        <strong>00/FWC:1,3,10/BRA:3,8,17/C:4,8</strong>
                     </template>
 
                     <template #form>
